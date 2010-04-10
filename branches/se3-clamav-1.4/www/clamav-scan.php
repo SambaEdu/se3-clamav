@@ -2,6 +2,9 @@
 require("entete.inc.php");
 require ("ihm.inc.php");
 
+//aide
+$_SESSION["pageaide"]="L\'interface_%C3%A9l%C3%A8ve#La_solution_antivirus";
+	
 if( isset($_POST['upload']) ) // si formulaire soumis
 {
   $file = $_FILES['fichier']['tmp_name'];
