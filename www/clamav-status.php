@@ -40,8 +40,8 @@ $update_days = floor(($now[0]-$updatetime)/(3600*24));
 // Base des signatures antivirales
 //
 
-$dailycvd= '/var/lib/clamav/dailyt.cvd';
-$dailycld= '/var/lib/clamav/dailyt.cld';
+$dailycvd= '/var/lib/clamav/daily.cvd';
+$dailycld= '/var/lib/clamav/daily.cld';
 
     if (file_exists($dailycvd)) {
 	$update_virus_time = filemtime($dailycvd);
