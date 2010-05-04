@@ -1,4 +1,4 @@
-se3-clamav (2.0.0) unstable; urgency=low
+se3-clamav (2.0.1) unstable; urgency=low
 
   * Modified daily localisation file for newest clamav version (again).
   * Modified architecture to all instead of any.  

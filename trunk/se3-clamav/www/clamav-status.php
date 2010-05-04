@@ -41,7 +41,7 @@ $update_days = floor(($now[0]-$updatetime)/(3600*24));
 //
 
 $dailycvd= '/var/lib/clamav/dailyt.cvd';
-$dailycld= '/var/lib/clamav/dailyt.cld'
+$dailycld= '/var/lib/clamav/dailyt.cld';
 
     if (file_exists($dailycvd)) {
 	$update_virus_time = filemtime($dailycvd);
