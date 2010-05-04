@@ -1,9 +1,0 @@
-The Debian Package se3-clamav
-----------------------------
-This package is part of the SambaEdu3 project, which is aimed at creating a file server for schools.
-More precision can be found at http://crdp.ac-caen.fr/se3/
-This project is licensed under the GNU GPL v2 or later
-
-This package gives an GUI for administrating the clamav antivirus.
-
-Laurent COOPER <swirly@slis.fr>, Wed,  2 Feb 2005 22:38:22 +0100
