@@ -1,9 +1,9 @@
-se3-clamav (2.0.0~1) UNRELEASED; urgency=low
+se3-clamav (2.0.0) unstable; urgency=low
 
   * Modified daily localisation file for newest clamav version (again).
-  * Modified architecture to all instead of any.
-  
- -- Laurent Cooper <laurent@ac-grenoble.fr>  Wed, 26 Nov 2008 16:17:51 +0100
+  * Modified architecture to all instead of any.  
+
+ -- Laurent COOPER <laurent@ac-grenoble.fr>  Tue, 04 May 2010 16:34:14 +0200
 
 se3-clamav (1.4-1) unstable; urgency=low
 
@@ -50,7 +50,3 @@ se3-clamav (1.0) unstable; urgency=low
   * Initial Release.
 
  -- Laurent COOPER <swirly@slis.fr>  Wed,  2 Feb 2005 22:38:22 +0100
-
-Local variables:
-mode: debian-changelog
-End:

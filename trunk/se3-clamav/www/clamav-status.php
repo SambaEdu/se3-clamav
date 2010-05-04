@@ -39,8 +39,15 @@ $update_days = floor(($now[0]-$updatetime)/(3600*24));
 //
 // Base des signatures antivirales
 //
-$update_virus_time = filemtime("/var/lib/clamav/daily.cvd");
 
+$dailycvd= '/var/lib/clamav/dailyt.cvd';
+$dailycld= '/var/lib/clamav/dailyt.cld'
+
+    if (file_exists($dailycvd)) {
+	$update_virus_time = filemtime($dailycvd);
+    } else {
+	$update_virus_time = filemtime($dailycld);
+    }
 
 //
 // Statut du paquet CLAMAV
