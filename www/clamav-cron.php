@@ -25,16 +25,29 @@
 require("entete.inc.php");
 require ("ihm.inc.php");
 
-// Authorization
-if ( is_admin("se3_is_admin",$login)!="Y")  if ( ($uid != $login) || (($uid == $login)&&((!preg_match("//home/$login/", $wrep))&&($consul!=1))))  die (gettext("Vous n'avez pas les droits suffisants pour accéder à cette fonction")."</BODY></HTML>");
+// HTMLpurifier
+include("../se3/includes/library/HTMLPurifier.auto.php");
+$config = HTMLPurifier_Config::createDefault();
+$purifier = new HTMLPurifier($config);
 
-if ($_GET["action"] == "trash")
+$id=$purifier->purify($_GET[id]);
+$directory=$purifier->purify($_POST[directory]);
+$frequency=$purifier->purify($_POST[frequency]);
+$remove=$purifier->purify($_POST[remove]);
+
+if ( isset($_POST['action']))  $cat = $purifier->purify($_POST['action']);
+elseif ( isset($_GET['action'])) $cat = $purifier->purify($_GET['action']);
+
+// Authorization
+if ( is_admin("se3_is_admin",$login)!="Y")  if ( ($uid != $login) || (($uid == $login)&&((!preg_match("//home/$login/", $wrep))&&($consul!=1))))  die (gettext("Vous n'avez pas les droits suffisants pour accï¿½der ï¿½ cette fonction")."</BODY></HTML>");
+
+if ($action == "trash")
 {
-  $query = "DELETE from clamav_dirs WHERE id=".$_GET["id"];
+  $query = "DELETE from clamav_dirs WHERE id=".$id;
   $result = mysql_query($query);
 }
 
-if ($_POST["action"] == "croncreate")
+if ($action == "croncreate")
 {
   // Recuperation des donnees dans la base SQL
  $query = "SELECT * from clamav_dirs ";
@@ -44,19 +57,19 @@ if ($_POST["action"] == "croncreate")
    $id = $r["id"];
    $frequency="frequency".$id;
    $remove="remove".$id;
-   if (isset ($_POST[$remove])) {
+   if (isset ($remove)) {
      $remove = "1";
      } else {
      $remove = "0";
      }
-   $update_query = "UPDATE clamav_dirs SET frequency='$_POST[$frequency]',remove='$remove' WHERE id='$id'";
+   $update_query = "UPDATE clamav_dirs SET frequency='$frequency',remove='$remove' WHERE id='$id'";
    mysql_query($update_query);
  }
 } 
 
-if ($_POST["action"] == "diradd")
+if ($action == "diradd")
  {
-   $query="INSERT into clamav_dirs (directory,frequency,remove) VALUES ('".$_POST["directory"]."','weekly','0')";
+   $query="INSERT into clamav_dirs (directory,frequency,remove) VALUES ('".$directory."','weekly','0')";
    mysql_query($query);
  }
 
@@ -72,7 +85,7 @@ $form = "<form action=\"clamav-cron.php\" method=\"post\">\n";
 $form .="<table align='center' border='1'>\n";
 $form .="<TR><TH class=\"menuheader\"> Programmation de l'antivirus </TH></TR>\n";
 $form .="<TR><td><table align='center' border='1'>\n";
-$form .="<TR><th class=\"menuheader\"> Répertoire </th><th class=\"menuheader\"> périodicité du scan </th>";
+$form .="<TR><th class=\"menuheader\"> R&eacute;pertoire </th><th class=\"menuheader\"> p&eacute;riodicit&eacute; du scan </th>";
 $form .="<th class=\"menuheader\"> retirer les fichiers (dangeureux)</th></TR>\n";
 	  if (mysql_num_rows($result)==0) {
            } else {
@@ -143,8 +156,8 @@ echo $form;
 
 $form = "<form action=\"clamav-cron.php\" method=\"post\">\n";
 $form .="<table align='center' border='1'>\n";
-$form .="<TR><TH> Ajout de répertoire </TH></TR>\n";
-$form .="<TR><TD>Répertoire à ajouter : <input type=\"text\" name=\"directory\" value=\"\"> 
+$form .="<TR><TH> Ajout de r&eacute;pertoire </TH></TR>\n";
+$form .="<TR><TD>R&eacute;pertoire &agrave; ajouter : <input type=\"text\" name=\"directory\" value=\"\"> 
 </TD></TR>";
 $form .= "</table>\n";
 $form .= "<input type=\"hidden\" name=\"action\" value=\"diradd\">";

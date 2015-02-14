@@ -25,14 +25,21 @@
 require("entete.inc.php");
 require ("ihm.inc.php");
 
+// HTMLpurifier
+include("../se3/includes/library/HTMLPurifier.auto.php");
+$config = HTMLPurifier_Config::createDefault();
+$purifier = new HTMLPurifier($config);
+
+$upload=$purifier->purify($_POST[upload]);
+
 //aide
 $_SESSION["pageaide"]="L\'interface_%C3%A9l%C3%A8ve#La_solution_antivirus";
 	
-if( isset($_POST['upload']) ) // si formulaire soumis
+if( isset($upload) ) // si formulaire soumis
 {
   $file = $_FILES['fichier']['tmp_name'];
   if ($file=="") {
-    exit ("le téléchargement n'a pas eu lieu. La taille est peut être supérieure à 2 Mo?");
+    exit ("le t&eacute;l&eacute;chargement n'a pas eu lieu. La taille est peut &ecirc;tre sup&eacute;rieure &agrave; 2 Mo?");
   }
   if( preg_match('#[\x00-\x1F\x7F-\x9F]#', $file))
   {
@@ -50,7 +57,7 @@ if( isset($_POST['upload']) ) // si formulaire soumis
       }
     else {
       print "<div style=\"padding:10px; background-color:#FFAAAA; border: solid #9e9784 2px; -moz-border-radius: 0 0 20px 20px;\">
-	Problème avec le fichier ".$_FILES['fichier']['name']."\n"; 
+	Probl&egrave;me avec le fichier ".$_FILES['fichier']['name']."\n"; 
       $temp = explode(":",$ligne,2);
       print " :".$temp[1]."<br>";
       }
