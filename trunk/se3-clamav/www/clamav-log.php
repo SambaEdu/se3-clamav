@@ -26,14 +26,21 @@
 require("entete.inc.php");
 require ("ihm.inc.php");
 
-if ( is_admin("se3_is_admin",$login)!="Y") die (gettext("Vous n'avez pas les droits suffisants pour accéder à cette fonction"
+// HTMLpurifier
+include("../se3/includes/library/HTMLPurifier.auto.php");
+$config = HTMLPurifier_Config::createDefault();
+$purifier = new HTMLPurifier($config);
+
+$directory=$purifier->purify($_POST[directory]);
+
+if ( is_admin("se3_is_admin",$login)!="Y") die (gettext("Vous n'avez pas les droits suffisants pour acc&eacute;der &agrave; cette fonction"
 )."</BODY></HTML>");
 
 echo "<h1> Solution antivirus serveur</h1>\n";
-if (isset($_POST["directory"])) {
-    print "<h2> Log des scans du r&eacute;pertoire".$_POST["directory"]."</h2>\n";
+if (isset($directory)) {
+    print "<h2> Log des scans du r&eacute;pertoire".$directory."</h2>\n";
     if (! isset($scan_start)) $scan_start=0;
-    $query=" SELECT * FROM clamav_scan WHERE directory='".$_POST["directory"]."'";
+    $query=" SELECT * FROM clamav_scan WHERE directory='".$directory."'";
     $query .=" ORDER BY id desc ";
     $query .="LIMIT $scan_start,1";
     
@@ -45,7 +52,7 @@ if (isset($_POST["directory"])) {
         echo "<form action='".$_SERVER['PHP_SELF']."' method='post'>\n";
         $previous_scan_start=$scan_start-1;
         echo "<input type=\"hidden\" name=\"scan_start\" value=\"$previous_scan_start\"/>";
-        print "<input type=\"hidden\" name=\"directory\" value=\"".$_POST["directory"]."\">\n";
+        print "<input type=\"hidden\" name=\"directory\" value=\"".$directory."\">\n";
         print "<input type=\"submit\" value=\"".gettext("Afficher les logs pr&eacute;c&eacute;dents.")."\">\n";
         print "</form>\n";
         }
@@ -58,7 +65,7 @@ if (isset($_POST["directory"])) {
         echo "<form action='".$_SERVER['PHP_SELF']."' method='post'>\n";
         $next_scan_start=$scan_start+1;
         echo "<input type=\"hidden\" name=\"scan_start\" value=\"$next_scan_start\"/>";
-        print "<input type=\"hidden\" name=\"directory\" value=\"".$_POST["directory"]."\">\n";
+        print "<input type=\"hidden\" name=\"directory\" value=\"".$directory."\">\n";
         print "<input type=\"submit\" value=\"".gettext("Afficher les logs suivants.")."\">\n";
         print "</form>\n";
         echo "</td></tr></table>\n";

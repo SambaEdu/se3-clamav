@@ -26,7 +26,16 @@
 require("entete.inc.php");
 require ("ihm.inc.php");
 
-if ( is_admin("se3_is_admin",$login)!="Y")  if ( ($uid != $login) || (($uid == $login)&&((!preg_match("//home/$login/", $wrep))&&($consul!=1))))  die (gettext("Vous n'avez pas les droits suffisants pour accéder à cette fonction")."</BODY></HTML>");
+// HTMLpurifier
+include("../se3/includes/library/HTMLPurifier.auto.php");
+$config = HTMLPurifier_Config::createDefault();
+$purifier = new HTMLPurifier($config);
+
+$action=$purifier->purify($_POST[action]);
+$mailing=$purifier->purify($_POST[mailing]);
+$address=$purifier->purify($_POST[address]);
+
+if ( is_admin("se3_is_admin",$login)!="Y")  if ( ($uid != $login) || (($uid == $login)&&((!preg_match("//home/$login/", $wrep))&&($consul!=1))))  die (gettext("Vous n'avez pas les droits suffisants pour accï¿½der ï¿½ cette fonction")."</BODY></HTML>");
 
 //
 // Fichier de paquets apt - date de mise a jour.
@@ -142,16 +151,16 @@ La base des signatures virales a &eacute;t&eacute; mise &agrave; jour le :
 echo strftime ("%A %d %B %Y",$update_virus_time); ?>
 
 <?php
-if ($_POST["action"] == "mailing") {
-  //inscription des paramètres dans la base SQL
+if ($action == "mailing") {
+  //inscription des parametres dans la base SQL
   $mailing_boolean = "0"; 
-  if (isset ($_POST["mailing"])) {
+  if (isset ($mailing)) {
     $mailing_boolean = "1"; 
   }
   $update_query = "UPDATE params SET value='$mailing_boolean' WHERE name='clamavmail'";
   mysql_query($update_query);
 
-  $mailing_address = $_POST["address"];
+  $mailing_address = $address;
   $update_query = "UPDATE params SET value='$mailing_address' WHERE name='clamavadm'";
   mysql_query($update_query);
 
