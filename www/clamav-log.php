@@ -39,7 +39,7 @@ if ( is_admin("se3_is_admin",$login)!="Y") die (gettext("Vous n'avez pas les dro
 echo "<h1> Solution antivirus serveur</h1>\n";
 if (isset($directory)) {
     print "<h2> Log des scans du r&eacute;pertoire".$directory."</h2>\n";
-    if (! isset($scan_start)) $scan_start=0;
+    if (! isset($_POST["scan_start"])) $scan_start=0; else $scan_start=$_POST["scan_start"]+0;
     $query=" SELECT * FROM clamav_scan WHERE directory='".$directory."'";
     $query .=" ORDER BY id desc ";
     $query .="LIMIT $scan_start,1";
@@ -73,6 +73,13 @@ if (isset($directory)) {
         echo "<TABLE  align='center' border='1'>\n";
         echo "<TR><TH> Log du scan par clamav</TH></TR>\n";
         $r=mysql_fetch_array($result);
+		// DATE
+        echo "<TR><TD class=\"menuheader\">\n";
+        echo "Date du scan";
+        echo "</TD></TR>";
+        echo "<TR><TD><pre>";        
+        echo $r["date"];
+        echo "</pre></TD></TR>";
        // SUMMARY
         echo "<TR><TD class=\"menuheader\">\n";
         echo "r&eacute;sum&eacute;";
