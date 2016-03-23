@@ -31,6 +31,7 @@ chomp $dbpass;
 ###
 #
 # Determines which scan to make
+# Stockage des informations dans deux tableaux
 #
 ###
 
@@ -42,10 +43,33 @@ my $sth= $dbd->prepare("SELECT * FROM clamav_dirs WHERE frequency=\'$frequency\'
 $sth->execute;
 
 my $ref_row;
+my @directory_tab;
+my @remove_tab;
+my $index_rep=0;
+
 while ($ref_row = $sth->fetchrow_hashref) {
-           my $directory = $ref_row->{"directory"};
-           my $remove = $ref_row->{"remove"};
-           my $tmp_file=tmpnam();
+           
+		   push @directory_tab, $ref_row->{"directory"};
+		   push @remove_tab, $ref_row->{"remove"};
+		   $index_rep++;
+		  }
+$dbd->disconnect();
+
+
+###
+#
+# Exploitation du tableau cree precedemment
+#
+###
+
+ 
+for(my $i = 0; $i < $index_rep; $i++) {
+my $directory=@directory_tab[$i];
+my $remove=@remove_tab[$i];
+   my $tmp_file=tmpnam();
+
+		   
+           
 
 #############################
 #
@@ -53,6 +77,7 @@ while ($ref_row = $sth->fetchrow_hashref) {
 #           
 #############################
           
+		 
           if ($remove eq "0") {
              `/usr/bin/nice -n 15 /usr/bin/clamscan -ri -l $tmp_file  $directory >> /dev/null 2>&1`;
              } else {             
@@ -91,8 +116,9 @@ while ($ref_row = $sth->fetchrow_hashref) {
           $summary =~ s/\'/\\\'/g;
           $scan_result =~ s/\'/\\\'/g;
           ##
-          $dbd->do("INSERT INTO clamav_scan (directory,summary,result) VALUES ('".$directory."','".$summary."','".$scan_result."')");
-
+my $dbdres = DBI->connect($dsn,$dbuser,$dbpass);
+          $dbdres->do("INSERT INTO clamav_scan (directory,summary,result) VALUES ('".$directory."','".$summary."','".$scan_result."')");
+$dbdres->disconnect(); 
 #############################
 #           
 # Destroy temporary file
@@ -100,6 +126,3 @@ while ($ref_row = $sth->fetchrow_hashref) {
 #############################
           unlink($tmp_file);
          }
-
-$dbd->disconnect();         
-         
