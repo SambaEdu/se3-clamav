@@ -30,7 +30,8 @@ include("../se3/includes/library/HTMLPurifier.auto.php");
 $config = HTMLPurifier_Config::createDefault();
 $purifier = new HTMLPurifier($config);
 
-$upload=$purifier->purify($_POST[upload]);
+if( isset($_POST[upload]))
+	$upload=$purifier->purify($_POST[upload]);
 
 //aide
 $_SESSION["pageaide"]="L\'interface_%C3%A9l%C3%A8ve#La_solution_antivirus";

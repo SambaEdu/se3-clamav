@@ -31,7 +31,8 @@ include("../se3/includes/library/HTMLPurifier.auto.php");
 $config = HTMLPurifier_Config::createDefault();
 $purifier = new HTMLPurifier($config);
 
-$directory=$purifier->purify($_POST[directory]);
+if (isset($_POST[directory]))
+	$directory=$purifier->purify($_POST[directory]);
 
 if ( is_admin("se3_is_admin",$login)!="Y") die (gettext("Vous n'avez pas les droits suffisants pour acc&eacute;der &agrave; cette fonction"
 )."</BODY></HTML>");
