@@ -1,0 +1,23 @@
+Format: 1.8
+Date: Thu, 24 Mar 2016 22:42:19 +0100
+Source: se3-clamav
+Binary: se3-clamav
+Architecture: all
+Version: 2.0.2
+Distribution: unstable
+Urgency: low
+Maintainer: Laurent COOPER <swirly@slis.fr>
+Changed-By: Laurent JOLY <laurentjoly@orange.fr>
+Description: 
+ se3-clamav - A clamav interface for se3
+Changes: 
+ se3-clamav (2.0.2) unstable; urgency=low
+ .
+   * Correctif pour ne plus avoir de deconnexion de la base sql.
+   * Correctif pour l affichage des logs dans l interface web SE3.
+Checksums-Sha1: 
+ d1b7f4aa3e2c070d91c0940ad468b3f4e6337d4f 10126 se3-clamav_2.0.2_all.deb
+Checksums-Sha256: 
+ 5194ec80e9050a7d0f700b0142869eb48a4b7519d802f72cd4d1455776d69bfc 10126 se3-clamav_2.0.2_all.deb
+Files: 
+ b27f39f0dcb6e6cad04033b621091be3 10126 misc optional se3-clamav_2.0.2_all.deb
