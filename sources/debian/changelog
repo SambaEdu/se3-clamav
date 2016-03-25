@@ -1,3 +1,9 @@
+se3-clamav (2.0.3) unstable; urgency=low
+
+  * Correctif de bugs dus a html purifier
+
+ -- Laurent JOLY <laurentjoly@orange.fr>  Thu, 24 Mar 2016 23:56:43 +0100
+
 se3-clamav (2.0.2) unstable; urgency=low
 
   * Correctif pour ne plus avoir de deconnexion de la base sql.

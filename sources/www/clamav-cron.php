@@ -21,7 +21,6 @@
    * file: clamav-cron.php
    */
 
-
 require("entete.inc.php");
 require ("ihm.inc.php");
 
@@ -31,12 +30,9 @@ $config = HTMLPurifier_Config::createDefault();
 $purifier = new HTMLPurifier($config);
 
 $id=$purifier->purify($_GET[id]);
-$directory=$purifier->purify($_POST[directory]);
-$frequency=$purifier->purify($_POST[frequency]);
-$remove=$purifier->purify($_POST[remove]);
 
-if ( isset($_POST['action']))  $cat = $purifier->purify($_POST['action']);
-elseif ( isset($_GET['action'])) $cat = $purifier->purify($_GET['action']);
+if ( isset($_POST['action']))  $action = $purifier->purify($_POST['action']);
+elseif ( isset($_GET['action'])) $action = $purifier->purify($_GET['action']);
 
 // Authorization
 if ( is_admin("se3_is_admin",$login)!="Y")  if ( ($uid != $login) || (($uid == $login)&&((!preg_match("//home/$login/", $wrep))&&($consul!=1))))  die (gettext("Vous n'avez pas les droits suffisants pour acc�der � cette fonction")."</BODY></HTML>");
@@ -54,21 +50,22 @@ if ($action == "croncreate")
  $result = mysql_query($query);
  //
  while ($r=mysql_fetch_array($result)) {
-   $id = $r["id"];
-   $frequency="frequency".$id;
-   $remove="remove".$id;
+   $id2 = $r["id"];
+   $frequency=$purifier->purify($_POST["frequency".$id2]);
+   $remove=$purifier->purify($_POST["remove".$id2]);
    if (isset ($remove)) {
      $remove = "1";
      } else {
      $remove = "0";
      }
-   $update_query = "UPDATE clamav_dirs SET frequency='$frequency',remove='$remove' WHERE id='$id'";
+   $update_query = "UPDATE clamav_dirs SET frequency='$frequency',remove='$remove' WHERE id='$id2'";
    mysql_query($update_query);
  }
 } 
 
 if ($action == "diradd")
  {
+   $directory=$purifier->purify($_POST["directory"]);
    $query="INSERT into clamav_dirs (directory,frequency,remove) VALUES ('".$directory."','weekly','0')";
    mysql_query($query);
  }

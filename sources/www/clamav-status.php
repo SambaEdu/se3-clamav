@@ -31,9 +31,12 @@ include("../se3/includes/library/HTMLPurifier.auto.php");
 $config = HTMLPurifier_Config::createDefault();
 $purifier = new HTMLPurifier($config);
 
-$action=$purifier->purify($_POST[action]);
-$mailing=$purifier->purify($_POST[mailing]);
-$address=$purifier->purify($_POST[address]);
+if (isset($_POST[action]))
+	$action=$purifier->purify($_POST[action]);
+if (isset($_POST[mailing]))
+	$mailing=$purifier->purify($_POST[mailing]);
+if (isset($_POST[address]))
+	$address=$purifier->purify($_POST[address]);
 
 if ( is_admin("se3_is_admin",$login)!="Y")  if ( ($uid != $login) || (($uid == $login)&&((!preg_match("//home/$login/", $wrep))&&($consul!=1))))  die (gettext("Vous n'avez pas les droits suffisants pour acc�der � cette fonction")."</BODY></HTML>");
 
@@ -153,17 +156,15 @@ echo strftime ("%A %d %B %Y",$update_virus_time); ?>
 <?php
 if ($action == "mailing") {
   //inscription des parametres dans la base SQL
-  $mailing_boolean = "0"; 
+  $mailing_boolean = "0";
   if (isset ($mailing)) {
     $mailing_boolean = "1"; 
   }
-  $update_query = "UPDATE params SET value='$mailing_boolean' WHERE name='clamavmail'";
+  $update_query = "INSERT INTO params (value, name, descr, cat) VALUES ('$mailing_boolean','clamavmail','activation des mails',6) ON DUPLICATE KEY UPDATE value='$mailing_boolean'";
   mysql_query($update_query);
-
   $mailing_address = $address;
-  $update_query = "UPDATE params SET value='$mailing_address' WHERE name='clamavadm'";
+  $update_query = "INSERT INTO params (value, name, descr, cat) VALUES ('$mailing_address','clamavadm','mail enregistre pour clamav',6) ON DUPLICATE KEY UPDATE value='$mailing_address'";
   mysql_query($update_query);
-
 } else {
   // Courriel 
   $query = "SELECT value from params where name='clamavmail'";
