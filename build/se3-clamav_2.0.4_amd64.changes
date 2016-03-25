@@ -1,0 +1,23 @@
+Format: 1.8
+Date: Fri, 25 Mar 2016 01:58:13 +0100
+Source: se3-clamav
+Binary: se3-clamav
+Architecture: all
+Version: 2.0.4
+Distribution: unstable
+Urgency: low
+Maintainer: Laurent COOPER <swirly@slis.fr>
+Changed-By: Laurent JOLY <laurentjoly@orange.fr>
+Description: 
+ se3-clamav - A clamav interface for se3
+Changes: 
+ se3-clamav (2.0.4) unstable; urgency=low
+ .
+   * Correctif de bugs dus a html purifier.
+   * Correctif permettant d enregistrer une adresse mail pour un rapport.
+Checksums-Sha1: 
+ dc92fb0d691c8712fd1f69ca5053c5056cdd3129 10336 se3-clamav_2.0.4_all.deb
+Checksums-Sha256: 
+ 093ceabb0e946b008fdd68f44715c491b9456d27372c13529bbc6eafd2e60961 10336 se3-clamav_2.0.4_all.deb
+Files: 
+ ae7ba35d77f66a6641f7e409aa0addb8 10336 misc optional se3-clamav_2.0.4_all.deb
