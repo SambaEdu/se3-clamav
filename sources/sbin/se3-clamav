@@ -27,6 +27,7 @@ chomp $dbuser;
 my $dbpass=`cat /var/www/se3/includes/config.inc.php | grep \"dbpass=\" | cut -d = -f 2 |cut -d \\\" -f 2`;
 chomp $dbpass;
 
+
 ###
 #
 # Determines which scan to make
@@ -54,7 +55,6 @@ while ($ref_row = $sth->fetchrow_hashref) {
 		  }
 $dbd->disconnect();
 
-
 ###
 #
 # Exploitation du tableau cree precedemment
@@ -68,7 +68,35 @@ my $remove=@remove_tab[$i];
    my $tmp_file=tmpnam();
 
 		   
-           
+ 
+###
+#
+# Recupere les informations sur l'envoi par mail
+# Stockage des informations dans deux tableaux
+#
+###
+
+my $dbdinfo = DBI->connect($dsn,$dbuser,$dbpass);
+my $dbparam= $dbdinfo->prepare("SELECT name, value FROM params WHERE name in ('clamavmail', 'clamavadm')");
+$dbparam->execute;
+
+my $envoi_mail=0;
+my $mail_clamav='';
+my $tmp_row;
+my $tmp;
+
+while ($tmp_row = $dbparam->fetchrow_hashref) {
+
+$tmp=$tmp_row->{"name"};
+		   if ($tmp eq "clamavmail"){
+		     $envoi_mail=$tmp_row->{"value"};
+		   }
+			if ($tmp eq "clamavadm"){
+		     $mail_clamav=$tmp_row->{"value"};
+		   }
+		  }
+$dbdinfo->disconnect();
+
 
 #############################
 #
@@ -117,7 +145,25 @@ my $remove=@remove_tab[$i];
           ##
 my $dbdres = DBI->connect($dsn,$dbuser,$dbpass);
           $dbdres->do("INSERT INTO clamav_scan (directory,summary,result) VALUES ('".$directory."','".$summary."','".$scan_result."')");
-$dbdres->disconnect(); 
+$dbdres->disconnect();
+
+if ($envoi_mail eq 1)
+{
+	my $subject='Analyse antivirus : '.$directory;
+	 
+	open(MAIL, "|/usr/sbin/sendmail -t");
+	 
+	## Mail Header
+	print MAIL "To: $mail_clamav\n";
+	print MAIL "From: $mail_clamav\n";
+	print MAIL "Subject: $subject\n\n";
+	## Mail Body
+	print MAIL $scan_result;
+	 
+	close(MAIL);
+}
+
+ 
 #############################
 #           
 # Destroy temporary file
