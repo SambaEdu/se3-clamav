@@ -1,0 +1,23 @@
+Format: 1.8
+Date: Sun, 09 Oct 2016 23:37:20 +0200
+Source: se3-clamav
+Binary: se3-clamav
+Architecture: all
+Version: 2.1.0
+Distribution: unstable
+Urgency: low
+Maintainer: Laurent COOPER <swirly@slis.fr>
+Changed-By: Laurent JOLY <laurentjoly@orange.fr>
+Description: 
+ se3-clamav - A clamav interface for se3
+Changes: 
+ se3-clamav (2.1.0) unstable; urgency=low
+ .
+   * Correctif de l'interface.
+   * Ajout de la possibilité d'envoyer des mails a chaque scan
+Checksums-Sha1: 
+ 6d4fc4bc156c9842518924a516b2159042bae3e0 10768 se3-clamav_2.1.0_all.deb
+Checksums-Sha256: 
+ 8bf65437adfdae229107cc0257459bcf9906cc37fe9fe6f91a1fb331fb67d115 10768 se3-clamav_2.1.0_all.deb
+Files: 
+ 088daf31574adbaef2369d4679aae3c6 10768 misc optional se3-clamav_2.1.0_all.deb
