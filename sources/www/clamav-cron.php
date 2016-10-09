@@ -53,7 +53,7 @@ if ($action == "croncreate")
    $id2 = $r["id"];
    $frequency=$purifier->purify($_POST["frequency".$id2]);
    $remove=$purifier->purify($_POST["remove".$id2]);
-   if (isset ($remove)) {
+   if ($remove=="remove".$id2) {
      $remove = "1";
      } else {
      $remove = "0";
