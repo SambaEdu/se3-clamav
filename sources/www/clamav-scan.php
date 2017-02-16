@@ -60,10 +60,10 @@ if( isset($upload) ) // si formulaire soumis
       print "<div style=\"padding:10px; background-color:#FFAAAA; border: solid #9e9784 2px; -moz-border-radius: 0 0 20px 20px;\">
 	Probl&egrave;me avec le fichier ".htmlspecialchars($_FILES['fichier']['name'], ENT_QUOTES, 'UTF-8')."\n"; 
       $temp = explode(":",$ligne,2);
-      print " :".$temp[1]."<br>";
+      print " :".htmlspecialchars($temp[1], ENT_QUOTES, 'UTF-8')."<br>";
       }
     foreach($scan_output as $ligne) {
-      print "$ligne <br>";
+      print htmlspecialchars($ligne, ENT_QUOTES, 'UTF-8')." <br>";
     }
     print "</div>";
   }

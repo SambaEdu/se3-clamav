@@ -133,8 +133,8 @@ echo strftime ("%A %d %B %Y",$updatetime); ?>
 <td class="menuheader">la version disponible de clamav est </td>
 </tr>
 <tr>
-<td class="menucell"><? echo $status_version; ?> </td>
-<td class="menucell"><? echo $avail_version; ?></td>
+<td class="menucell"><? echo htmlspecialchars($status_version, ENT_QUOTES, 'UTF-8'); ?> </td>
+<td class="menucell"><? echo htmlspecialchars($avail_version, ENT_QUOTES, 'UTF-8'); ?></td>
 </tr>
 </table>
 
@@ -185,7 +185,7 @@ Le syst&egrave;me antivirus peut vous envoyer un rapport du scan par courriel &a
 <form action="clamav-status.php" method="post">
 <?php 
 if ($mailing_boolean == 0 ) { $selected=""; } else {$selected ="checked";}
-echo "<input type=\"checkbox\" name=\"mailing\" value=\"mailing\" $selected />\n"; 
+echo "<input type=\"checkbox\" name=\"mailing\" value=\"mailing\" ".htmlspecialchars($selected, ENT_QUOTES, 'UTF-8')." />\n"; 
 ?> Envoyer un courriel en cas de virus trouv&eacute;.
 <br>
 <input type="text" name="address" value="<?php echo htmlspecialchars($mailing_address, ENT_QUOTES, 'UTF-8'); ?>"/> Adresse mail d'envoi du courriel.

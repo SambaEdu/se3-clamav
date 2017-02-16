@@ -22,7 +22,6 @@
    */
 
 
-
 require("entete.inc.php");
 require ("ihm.inc.php");
 
@@ -52,7 +51,7 @@ if (isset($directory)) {
       if ($scan_start!=0) {
         echo "<form action='".htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8')."' method='post'>\n";
         $previous_scan_start=$scan_start-1;
-        echo "<input type=\"hidden\" name=\"scan_start\" value=\"$previous_scan_start\"/>";
+        echo "<input type=\"hidden\" name=\"scan_start\" value=\"".htmlspecialchars($previous_scan_start, ENT_QUOTES, 'UTF-8')."\"/>";
         print "<input type=\"hidden\" name=\"directory\" value=\"".htmlspecialchars($directory, ENT_QUOTES, 'UTF-8')."\">\n";
         print "<input type=\"submit\" value=\"".gettext("Afficher les logs pr&eacute;c&eacute;dents.")."\">\n";
         print "</form>\n";
@@ -65,7 +64,7 @@ if (isset($directory)) {
         echo "<td width=\"50%\" align=\"right\">";
         echo "<form action='".htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8')."' method='post'>\n";
         $next_scan_start=$scan_start+1;
-        echo "<input type=\"hidden\" name=\"scan_start\" value=\"$next_scan_start\"/>";
+        echo "<input type=\"hidden\" name=\"scan_start\" value=\"".htmlspecialchars($next_scan_start, ENT_QUOTES, 'UTF-8')."\"/>";
         print "<input type=\"hidden\" name=\"directory\" value=\"".htmlspecialchars($directory, ENT_QUOTES, 'UTF-8')."\">\n";
         print "<input type=\"submit\" value=\"".gettext("Afficher les logs suivants.")."\">\n";
         print "</form>\n";
@@ -79,21 +78,21 @@ if (isset($directory)) {
         echo "Date du scan";
         echo "</TD></TR>";
         echo "<TR><TD><pre>";        
-        echo $r["date"];
+        echo htmlspecialchars($r["date"], ENT_QUOTES, 'UTF-8');
         echo "</pre></TD></TR>";
        // SUMMARY
         echo "<TR><TD class=\"menuheader\">\n";
         echo "r&eacute;sum&eacute;";
         echo "</TD></TR>";
         echo "<TR><TD><pre>\n";        
-        echo $r["summary"];
+        echo htmlspecialchars($r["summary"], ENT_QUOTES, 'UTF-8');
         echo "</pre></TD></TR>";
         //SCAN RESULT
         echo "<TR><TD class=\"menuheader\">\n";
         echo "R&eacute;sultat du scan";
         echo "</TD></TR>";
         echo "<TR><TD><pre>\n";        
-        echo $r["result"];
+        echo htmlspecialchars($r["result"], ENT_QUOTES, 'UTF-8');
         echo "</pre></TD></TR></TABLE>\n";
         }
       }
@@ -103,8 +102,8 @@ if (isset($directory)) {
 
     print "<form action='".htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8')."' method='post'>\n";
     while ($r=mysql_fetch_array($result)) {
-      print "<input type=\"radio\" name=\"directory\" value=\"".$r["directory"]."\">\n"; 
-      print gettext("Log des scans du r&eacute;pertoire ".$r["directory"]);
+      print "<input type=\"radio\" name=\"directory\" value=\"".htmlspecialchars($r["directory"], ENT_QUOTES, 'UTF-8')."\">\n"; 
+      print gettext("Log des scans du r&eacute;pertoire ".htmlspecialchars($r["directory"], ENT_QUOTES, 'UTF-8'));
       print "<br/>\n";
     }
     print "<input type=\"submit\" value=\"".gettext("Afficher les logs.")."\">\n";
