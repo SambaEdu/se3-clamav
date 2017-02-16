@@ -39,7 +39,7 @@ if ( is_admin("se3_is_admin",$login)!="Y")  if ( ($uid != $login) || (($uid == $
 
 if ($action == "trash")
 {
-  $query = "DELETE from clamav_dirs WHERE id=".$id;
+  $query = "DELETE from clamav_dirs WHERE id='".mysql_real_escape_string($id)."'";
   $result = mysql_query($query);
 }
 
@@ -58,7 +58,7 @@ if ($action == "croncreate")
      } else {
      $remove = "0";
      }
-   $update_query = "UPDATE clamav_dirs SET frequency='$frequency',remove='$remove' WHERE id='$id2'";
+   $update_query = "UPDATE clamav_dirs SET frequency='".mysql_real_escape_string($frequency)."',remove='".mysql_real_escape_string($remove)."' WHERE id='".mysql_real_escape_string($id2)."'";
    mysql_query($update_query);
  }
 } 
@@ -66,7 +66,7 @@ if ($action == "croncreate")
 if ($action == "diradd")
  {
    $directory=$purifier->purify($_POST["directory"]);
-   $query="INSERT into clamav_dirs (directory,frequency,remove) VALUES ('".$directory."','weekly','0')";
+   $query="INSERT into clamav_dirs (directory,frequency,remove) VALUES ('".mysql_real_escape_string($directory)."','weekly','0')";
    mysql_query($query);
  }
 

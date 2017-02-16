@@ -160,10 +160,10 @@ if ($action == "mailing") {
   if (isset ($mailing)) {
     $mailing_boolean = "1"; 
   }
-  $update_query = "INSERT INTO params (value, name, descr, cat) VALUES ('$mailing_boolean','clamavmail','activation des mails',6) ON DUPLICATE KEY UPDATE value='$mailing_boolean'";
+  $update_query = "INSERT INTO params (value, name, descr, cat) VALUES ('".mysql_real_escape_string($mailing_boolean)."','clamavmail','activation des mails',6) ON DUPLICATE KEY UPDATE value='".mysql_real_escape_string($mailing_boolean)."'";
   mysql_query($update_query);
   $mailing_address = $address;
-  $update_query = "INSERT INTO params (value, name, descr, cat) VALUES ('$mailing_address','clamavadm','mail enregistre pour clamav',6) ON DUPLICATE KEY UPDATE value='$mailing_address'";
+  $update_query = "INSERT INTO params (value, name, descr, cat) VALUES ('".mysql_real_escape_string($mailing_address)."','clamavadm','mail enregistre pour clamav',6) ON DUPLICATE KEY UPDATE value='".mysql_real_escape_string($mailing_address)."'";
   mysql_query($update_query);
 } else {
   // Courriel 
@@ -188,7 +188,7 @@ if ($mailing_boolean == 0 ) { $selected=""; } else {$selected ="checked";}
 echo "<input type=\"checkbox\" name=\"mailing\" value=\"mailing\" $selected />\n"; 
 ?> Envoyer un courriel en cas de virus trouv&eacute;.
 <br>
-<input type="text" name="address" value="<?php echo "$mailing_address"; ?>"/> Adresse mail d'envoi du courriel.
+<input type="text" name="address" value="<?php echo htmlspecialchars($mailing_address, ENT_QUOTES, 'UTF-8'); ?>"/> Adresse mail d'envoi du courriel.
 <br/>
 <input type="hidden" name="action" value="mailing">
 <input type="submit" value="Valider">
