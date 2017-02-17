@@ -54,11 +54,11 @@ if ($action == "croncreate")
    $frequency=$purifier->purify($_POST["frequency".$id2]);
    $remove=$purifier->purify($_POST["remove".$id2]);
    if ($remove=="remove".$id2) {
-     $remove = "1";
+     $remove = "1"; // changer le nom des variables... risques de confusion
      } else {
      $remove = "0";
      }
-   $update_query = "UPDATE clamav_dirs SET frequency='".mysql_real_escape_string($frequency)."',remove='".mysql_real_escape_string($remove)."' WHERE id='".mysql_real_escape_string($id2)."'";
+   $update_query = "UPDATE clamav_dirs SET frequency='".mysql_real_escape_string($frequency)."',remove='".$remove."' WHERE id='".mysql_real_escape_string($id2)."'";
    mysql_query($update_query);
  }
 } 
@@ -125,19 +125,19 @@ $form .="<th class=\"menuheader\"> retirer les fichiers (dangeureux)</th></TR>\n
             $form .="</a>\n";
             $form .= htmlspecialchars($r['directory'], ENT_QUOTES, 'UTF-8')."</td>\n";
             $form .="<td  align=\"center\" ><select name=\"frequency".htmlspecialchars($r['id'], ENT_QUOTES, 'UTF-8')."\"> \n";
-            $form .="<option value=\"none\" ".htmlspecialchars($none_selected, ENT_QUOTES, 'UTF-8')."> Pas de scan </option> \n";
-            $form .="<option value=\"lundi\" ".htmlspecialchars($lundi_selected, ENT_QUOTES, 'UTF-8')."> Scan lundi soir </option> \n";
-            $form .="<option value=\"mardi\" ".htmlspecialchars($mardi_selected, ENT_QUOTES, 'UTF-8')."> Scan mardi soir </option> \n";
-            $form .="<option value=\"mercredi\" ".htmlspecialchars($mercredi_selected, ENT_QUOTES, 'UTF-8')."> Scan mercredi soir </option> \n";
-            $form .="<option value=\"jeudi\" ".htmlspecialchars($jeudi_selected, ENT_QUOTES, 'UTF-8')."> Scan jeudi soir </option> \n";
-            $form .="<option value=\"vendredi\" ".htmlspecialchars($vendredi_selected, ENT_QUOTES, 'UTF-8')."> Scan vendredi soir </option> \n";
-            $form .="<option value=\"samedi\" ".htmlspecialchars($samedi_selected, ENT_QUOTES, 'UTF-8')."> Scan samedi soir </option> \n";
-            $form .="<option value=\"dimanche\" ".htmlspecialchars($dimanche_selected, ENT_QUOTES, 'UTF-8')."> Scan dimanche soir </option> \n";
-            $form .="<option value=\"daily\" ".htmlspecialchars($daily_selected, ENT_QUOTES, 'UTF-8')."> Scan quotidien </option> \n";
-            $form .="<option value=\"weekly\" ".htmlspecialchars($weekly_selected, ENT_QUOTES, 'UTF-8')."> Scan hebdomadaire </option> \n";
+            $form .="<option value=\"none\" ".$none_selected."> Pas de scan </option> \n";
+            $form .="<option value=\"lundi\" ".$lundi_selected."> Scan lundi soir </option> \n";
+            $form .="<option value=\"mardi\" ".$mardi_selected."> Scan mardi soir </option> \n";
+            $form .="<option value=\"mercredi\" ".$mercredi_selected."> Scan mercredi soir </option> \n";
+            $form .="<option value=\"jeudi\" ".$jeudi_selected."> Scan jeudi soir </option> \n";
+            $form .="<option value=\"vendredi\" ".$vendredi_selected."> Scan vendredi soir </option> \n";
+            $form .="<option value=\"samedi\" ".$samedi_selected."> Scan samedi soir </option> \n";
+            $form .="<option value=\"dimanche\" ".$dimanche_selected."> Scan dimanche soir </option> \n";
+            $form .="<option value=\"daily\" ".$daily_selected."> Scan quotidien </option> \n";
+            $form .="<option value=\"weekly\" ".$weekly_selected."> Scan hebdomadaire </option> \n";
             $form .="</select></td>\n";
             if ($r['remove'] == 0 ) { $remove_selected=""; } else {$remove_selected ="checked";}
-            $form .="<td class=\"menucell\"  align=\"center\" > Suppression des virus (dangereux) <input type=\"checkbox\" name=\"remove".htmlspecialchars($r['id'], ENT_QUOTES, 'UTF-8')."\" value=\"remove".htmlspecialchars($r['id'], ENT_QUOTES, 'UTF-8')."\"".htmlspecialchars($remove_selected, ENT_QUOTES, 'UTF-8')."  /><br/> \n";
+            $form .="<td class=\"menucell\"  align=\"center\" > Suppression des virus (dangereux) <input type=\"checkbox\" name=\"remove".htmlspecialchars($r['id'], ENT_QUOTES, 'UTF-8')."\" value=\"remove".htmlspecialchars($r['id'], ENT_QUOTES, 'UTF-8')."\"".$remove_selected."  /><br/> \n";
             }
 $form .= "</table></td></tr>\n";
 
