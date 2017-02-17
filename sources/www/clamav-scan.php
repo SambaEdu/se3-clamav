@@ -47,23 +47,23 @@ if( isset($upload) ) // si formulaire soumis
     exit("Nom de fichier non valide");
   }
   else {
-    exec('/usr/bin/clamscan'." ".$file,$scan_output);
+    exec('/usr/bin/clamscan '.escapeshellarg($file),$scan_output);
     $ligne=array_shift($scan_output);
     print "<div  style=\"padding:10px; border: solid #9e9784 2px; background-color:#6699CC; -moz-border-radius: 20px 20px 0 0;\">
-     Scan antivirus sur le  fichier ".$_FILES['fichier']['name'].". 
+     Scan antivirus sur le  fichier ".htmlspecialchars($_FILES['fichier']['name'], ENT_QUOTES, 'UTF-8').". 
      </div>\n";     
     if ( preg_match('/:\ OK/',$ligne)) { 
       print "<div style=\"padding:10px; border: solid #9e9784 2px; -moz-border-radius: 0 0 20px 20px;\"
-	pas de virus pour le fichier ".$_FILES['fichier']['name']."<br>\n"; 
+	    pas de virus pour le fichier ".htmlspecialchars($_FILES['fichier']['name'], ENT_QUOTES, 'UTF-8')."<br>\n"; 
       }
     else {
       print "<div style=\"padding:10px; background-color:#FFAAAA; border: solid #9e9784 2px; -moz-border-radius: 0 0 20px 20px;\">
-	Probl&egrave;me avec le fichier ".$_FILES['fichier']['name']."\n"; 
+	Probl&egrave;me avec le fichier ".htmlspecialchars($_FILES['fichier']['name'], ENT_QUOTES, 'UTF-8')."\n"; 
       $temp = explode(":",$ligne,2);
-      print " :".$temp[1]."<br>";
+      print " :".htmlspecialchars($temp[1], ENT_QUOTES, 'UTF-8')."<br>";
       }
     foreach($scan_output as $ligne) {
-      print "$ligne <br>";
+      print htmlspecialchars($ligne, ENT_QUOTES, 'UTF-8')." <br>";
     }
     print "</div>";
   }

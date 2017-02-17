@@ -39,7 +39,7 @@ if ( is_admin("se3_is_admin",$login)!="Y")  if ( ($uid != $login) || (($uid == $
 
 if ($action == "trash")
 {
-  $query = "DELETE from clamav_dirs WHERE id=".$id;
+  $query = "DELETE from clamav_dirs WHERE id='".mysql_real_escape_string($id)."'";
   $result = mysql_query($query);
 }
 
@@ -58,7 +58,7 @@ if ($action == "croncreate")
      } else {
      $remove = "0";
      }
-   $update_query = "UPDATE clamav_dirs SET frequency='$frequency',remove='$remove' WHERE id='$id2'";
+   $update_query = "UPDATE clamav_dirs SET frequency='".mysql_real_escape_string($frequency)."',remove='".mysql_real_escape_string($remove)."' WHERE id='".mysql_real_escape_string($id2)."'";
    mysql_query($update_query);
  }
 } 
@@ -66,7 +66,7 @@ if ($action == "croncreate")
 if ($action == "diradd")
  {
    $directory=$purifier->purify($_POST["directory"]);
-   $query="INSERT into clamav_dirs (directory,frequency,remove) VALUES ('".$directory."','weekly','0')";
+   $query="INSERT into clamav_dirs (directory,frequency,remove) VALUES ('".mysql_real_escape_string($directory)."','weekly','0')";
    mysql_query($query);
  }
 
@@ -120,24 +120,24 @@ $form .="<th class=\"menuheader\"> retirer les fichiers (dangeureux)</th></TR>\n
                break;
             }
             $form .="<tr><td align=\"left\">";
-            $form .="<a href='clamav-cron.php?action=trash&amp;id=".$r['id']."'>\n";
+            $form .="<a href='clamav-cron.php?action=trash&amp;id=".htmlspecialchars($r['id'], ENT_QUOTES, 'UTF-8')."'>\n";
             $form .="<img src='/elements/images/edittrash.png' border='0' alt='Supprimer' title='Supprimer'>\n";
             $form .="</a>\n";
-            $form .= $r['directory']."</td>\n";
-            $form .="<td  align=\"center\" ><select name=\"frequency".$r['id']."\"> \n";
-            $form .="<option value=\"none\" $none_selected> Pas de scan </option> \n";
-            $form .="<option value=\"lundi\" $lundi_selected> Scan lundi soir </option> \n";
-            $form .="<option value=\"mardi\" $mardi_selected> Scan mardi soir </option> \n";
-            $form .="<option value=\"mercredi\" $mercredi_selected> Scan mercredi soir </option> \n";
-            $form .="<option value=\"jeudi\" $jeudi_selected> Scan jeudi soir </option> \n";
-            $form .="<option value=\"vendredi\" $vendredi_selected> Scan vendredi soir </option> \n";
-            $form .="<option value=\"samedi\" $samedi_selected> Scan samedi soir </option> \n";
-            $form .="<option value=\"dimanche\" $dimanche_selected> Scan dimanche soir </option> \n";
-            $form .="<option value=\"daily\" $daily_selected> Scan quotidien </option> \n";
-            $form .="<option value=\"weekly\" $weekly_selected> Scan hebdomadaire </option> \n";
+            $form .= htmlspecialchars($r['directory'], ENT_QUOTES, 'UTF-8')."</td>\n";
+            $form .="<td  align=\"center\" ><select name=\"frequency".htmlspecialchars($r['id'], ENT_QUOTES, 'UTF-8')."\"> \n";
+            $form .="<option value=\"none\" ".htmlspecialchars($none_selected, ENT_QUOTES, 'UTF-8')."> Pas de scan </option> \n";
+            $form .="<option value=\"lundi\" ".htmlspecialchars($lundi_selected, ENT_QUOTES, 'UTF-8')."> Scan lundi soir </option> \n";
+            $form .="<option value=\"mardi\" ".htmlspecialchars($mardi_selected, ENT_QUOTES, 'UTF-8')."> Scan mardi soir </option> \n";
+            $form .="<option value=\"mercredi\" ".htmlspecialchars($mercredi_selected, ENT_QUOTES, 'UTF-8')."> Scan mercredi soir </option> \n";
+            $form .="<option value=\"jeudi\" ".htmlspecialchars($jeudi_selected, ENT_QUOTES, 'UTF-8')."> Scan jeudi soir </option> \n";
+            $form .="<option value=\"vendredi\" ".htmlspecialchars($vendredi_selected, ENT_QUOTES, 'UTF-8')."> Scan vendredi soir </option> \n";
+            $form .="<option value=\"samedi\" ".htmlspecialchars($samedi_selected, ENT_QUOTES, 'UTF-8')."> Scan samedi soir </option> \n";
+            $form .="<option value=\"dimanche\" ".htmlspecialchars($dimanche_selected, ENT_QUOTES, 'UTF-8')."> Scan dimanche soir </option> \n";
+            $form .="<option value=\"daily\" ".htmlspecialchars($daily_selected, ENT_QUOTES, 'UTF-8')."> Scan quotidien </option> \n";
+            $form .="<option value=\"weekly\" ".htmlspecialchars($weekly_selected, ENT_QUOTES, 'UTF-8')."> Scan hebdomadaire </option> \n";
             $form .="</select></td>\n";
             if ($r['remove'] == 0 ) { $remove_selected=""; } else {$remove_selected ="checked";}
-            $form .="<td class=\"menucell\"  align=\"center\" > Suppression des virus (dangereux) <input type=\"checkbox\" name=\"remove".$r['id']."\" value=\"remove".$r['id']."\" $remove_selected /><br/> \n";
+            $form .="<td class=\"menucell\"  align=\"center\" > Suppression des virus (dangereux) <input type=\"checkbox\" name=\"remove".htmlspecialchars($r['id'], ENT_QUOTES, 'UTF-8')."\" value=\"remove".htmlspecialchars($r['id'], ENT_QUOTES, 'UTF-8')."\"".htmlspecialchars($remove_selected, ENT_QUOTES, 'UTF-8')."  /><br/> \n";
             }
 $form .= "</table></td></tr>\n";
 
@@ -150,7 +150,6 @@ $form.="</form>\n";
 
 echo $form;
 
-
 $form = "<form action=\"clamav-cron.php\" method=\"post\">\n";
 $form .="<table align='center' border='1'>\n";
 $form .="<TR><TH> Ajout de r&eacute;pertoire </TH></TR>\n";
@@ -161,9 +160,7 @@ $form .= "<input type=\"hidden\" name=\"action\" value=\"diradd\">";
 $form .= "<input type=\"submit\" value=\"Ajouter\">";
 $form.="</form>\n";
 
-
 echo $form;
-
 
 require ("pdp.inc.php");
 ?>
