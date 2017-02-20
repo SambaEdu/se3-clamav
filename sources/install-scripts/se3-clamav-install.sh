@@ -15,6 +15,6 @@ mysql -h $dbhost $dbname -u $dbuser -p$dbpass < /var/cache/se3_install/se3-clama
 mysql -h $dbhost $dbname -u $dbuser -p$dbpass < /var/cache/se3_install/se3-clamav/clamav-db_utf.sql >/dev/null 2>&1
 # configuration de freshclam
 mv /etc/clamav/freshclam.conf /etc/clamav/freshclam.conf.save
-cp /var/cache/se3_install/se3-clamav/freshclam.conf
+cp /var/cache/se3_install/se3-clamav/freshclam.conf /etc/clamav/freshclam.conf
 chmod 644 /etc/clamav/freshclam.conf
 chown clamav:adm /etc/clamav/freshclam.conf
