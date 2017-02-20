@@ -1,4 +1,4 @@
-se3-clamav (2.2.0~3) unstable; urgency=low
+se3-clamav (2.2.0) unstable; urgency=low
 
   * Securisation de l'affichage des variables
   * Passage au mysqli avec securisation des requetes
