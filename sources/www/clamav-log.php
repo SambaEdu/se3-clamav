@@ -42,7 +42,7 @@ mysqli_set_charset($link_clamav, "utf8");
 echo "<h1> Solution antivirus serveur</h1>\n";
 if (isset($directory))
 {
-	print "<h2> Log des scans du r&eacute;pertoire".htmlspecialchars($directory, ENT_QUOTES, 'UTF-8')."</h2>\n";
+	print "<h2> Log des scans du r&eacute;pertoire ".htmlspecialchars($directory, ENT_QUOTES, 'UTF-8')."</h2>\n";
 	if (! isset($_POST["scan_start"]))
 		$scan_start=0;
 	else

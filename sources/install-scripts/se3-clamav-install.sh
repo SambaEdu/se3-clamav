@@ -13,3 +13,8 @@ fi
     echo "creating database parts"
 mysql -h $dbhost $dbname -u $dbuser -p$dbpass < /var/cache/se3_install/se3-clamav/clamav-db.sql >/dev/null 2>&1
 mysql -h $dbhost $dbname -u $dbuser -p$dbpass < /var/cache/se3_install/se3-clamav/clamav-db_utf.sql >/dev/null 2>&1
+# configuration de freshclam
+mv /etc/clamav/freshclam.log /etc/clamav/freshclam.log.save
+cp /var/cache/se3_install/se3-clamav/freshclam.log
+chmod 644 /etc/clamav/freshclam.log
+chown clamav:adm /etc/clamav/freshclam.log
