@@ -1,8 +1,19 @@
-se3-clamav (2.1.1~1) unstable; urgency=low
+se3-clamav (2.2.0~1) unstable; urgency=low
 
-  * Version avec patch de secu suite pull request.
+  * Securisation de l'affichage des variables
+  * Passage au mysqli avec securisation des requetes
+  * Nettoyage du code php
+  * Suppression des notices php
 
- -- Franck Molle <franck.molle@ac-rouen.fr>  Fri, 17 Fev 2017 21:45:20 +0100
+ -- Laurent JOLY <laurentjoly@orange.fr>  Mon, 20 Feb 2017 13:43:13 +0100
+ 
+ 
+se3-clamav (2.1.0) unstable; urgency=low
+
+  * activation envoi de mail
+  * correctif sur la page de programmation
+
+ -- Laurent JOLY <laurentjoly@orange.fr>  Sun, 9 Oct 2016 23:43:13 +0100
 
 se3-clamav (2.0.4) unstable; urgency=low
 

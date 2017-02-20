@@ -29,15 +29,17 @@ include("../se3/includes/library/HTMLPurifier.auto.php");
 $config = HTMLPurifier_Config::createDefault();
 $purifier = new HTMLPurifier($config);
 
-$id=$purifier->purify($_GET[id]);
+if (isset ($_GET['id']))
+	$id=$purifier->purify($_GET['id']);
 
 if ( isset($_POST['action']))  $action = $purifier->purify($_POST['action']);
 elseif ( isset($_GET['action'])) $action = $purifier->purify($_GET['action']);
+else $action="";
 
 // Authorization
 if ( is_admin("se3_is_admin",$login)!="Y")  if ( ($uid != $login) || (($uid == $login)&&((!preg_match("//home/$login/", $wrep))&&($consul!=1))))  die (gettext("Vous n'avez pas les droits suffisants pour acc&#233;der &#224; cette fonction")."</BODY></HTML>");
 
-$link_clamav = mysqli_connect($_SESSION["SERVEUR_SQL"], $_SESSION["COMPTE_BASE"], $_SESSION["PSWD_BASE"], 'ocsweb');
+$link_clamav = mysqli_connect($dbhost, $dbuser, $dbpass, $dbname);
 mysqli_set_charset($link_clamav, "utf8");
 
 if ($action == "trash")
@@ -67,7 +69,7 @@ if ($action == "croncreate")
 		{
 			$remove2 = "0";
 		}
-		$query = mysqli_prepare($link_clamav, "UPDATE clamav_dirs SET frequency='?',remove=? WHERE id=?");
+		$query = mysqli_prepare($link_clamav, "UPDATE clamav_dirs SET frequency=?,remove=? WHERE id=?");
 		mysqli_stmt_bind_param($query,"sii", $frequency, $remove2, $id2);
 		mysqli_stmt_execute($query);
 		mysqli_stmt_close($query);
@@ -77,7 +79,7 @@ if ($action == "croncreate")
 if ($action == "diradd")
 {
 	$directory=$purifier->purify($_POST["directory"]);
-	$query = mysqli_prepare($link_clamav, "INSERT into clamav_dirs (directory,frequency,remove) VALUES ('?','weekly','0')");
+	$query = mysqli_prepare($link_clamav, "INSERT into clamav_dirs (directory,frequency,remove) VALUES (?,'weekly','0')");
 	mysqli_stmt_bind_param($query,"s", $directory);
 	mysqli_stmt_execute($query);
 	mysqli_stmt_close($query);
