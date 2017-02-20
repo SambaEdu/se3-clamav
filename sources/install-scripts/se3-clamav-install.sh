@@ -12,3 +12,4 @@ fi
 # creation de la table pour les scan
     echo "creating database parts"
 mysql -h $dbhost $dbname -u $dbuser -p$dbpass < /var/cache/se3_install/se3-clamav/clamav-db.sql >/dev/null 2>&1
+mysql -h $dbhost $dbname -u $dbuser -p$dbpass < /var/cache/se3_install/se3-clamav/clamav-db_utf.sql >/dev/null 2>&1

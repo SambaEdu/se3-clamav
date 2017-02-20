@@ -5,16 +5,16 @@
 CREATE TABLE IF NOT EXISTS clamav_scan(
   id	INT	AUTO_INCREMENT,
   date	timestamp	NOT NULL,
-  directory text NOT NULL,
-  summary	mediumtext,
-  result	mediumtext,
+  directory varchar(255) NOT NULL,
+  summary	blob,
+  result	blob,
   PRIMARY KEY (id)
 )  DEFAULT CHARSET=utf8;
     
 CREATE TABLE IF NOT EXISTS clamav_dirs(  
   id INT AUTO_INCREMENT,
   directory varchar(255) NOT NULL,
-  frequency text,
+  frequency varchar(255),
   remove tinyint,
   PRIMARY KEY (id),
   UNIQUE (directory)

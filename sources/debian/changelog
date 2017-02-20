@@ -4,6 +4,7 @@ se3-clamav (2.2.0~1) unstable; urgency=low
   * Passage au mysqli avec securisation des requetes
   * Nettoyage du code php
   * Suppression des notices php
+  * correction de la base sql (encodage,type variable)
 
  -- Laurent JOLY <laurentjoly@orange.fr>  Mon, 20 Feb 2017 13:43:13 +0100
  
